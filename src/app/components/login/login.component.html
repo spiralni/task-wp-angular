@@ -1,15 +1,26 @@
 <div class="row">
     <div class="col-12">
-        <form>
+        <form #loginForm="ngForm" (submit)="onSubmit(loginForm)">
             <div class="mb-3">
-                <label for="email" class="form-label">E-Mail</label>
-                <input type="text" class="form-control" id="email" placeholder="Email">
+                <label for="username" class="form-label">Username</label>
+                <input 
+                  type="text" 
+                  class="form-control" 
+                  id="username" 
+                  name="username"
+                  ngModel
+                  placeholder="username">
               </div>
               <div class="mb-3">
                 <label for="password" class="form-label">Password</label>
-                <input type="password" class="form-control" id="password" placeholder="Password">
+                <input 
+                  type="password" class="form-control" 
+                  id="password" 
+                  name="password"
+                  ngModel
+                  placeholder="Password">
               </div>
-              <button type="submit" class="btn btn-success">LogIn</button>
+              <button type="submit" class="btn btn-success" [disabled]="!loginForm.valid">LogIn</button>
         </form>        
     </div>
 </div>

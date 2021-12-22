@@ -2,7 +2,10 @@
     <div class="container-fluid">
       <a class="navbar-brand">Navbar</a>
       <form class="d-flex">
-        <button class="btn btn-outline-danger" type="submit">Log Out</button>
+        <button 
+          *ngIf="isLoggedIn"
+          class="btn btn-outline-danger" 
+          type="submit">Log Out</button>
       </form>
     </div>
   </nav>
