@@ -1,5 +1,6 @@
 import { HttpClient } from "@angular/common/http"
 import { Injectable } from "@angular/core"
+import * as moment from "moment"
 import { Observable, Subject, Subscriber } from "rxjs"
 
 import AppConfig from '../configs/app.config'
@@ -33,12 +34,14 @@ export class AuthService {
     }
 
     doLogin(username: string, password: string) {
+        const body = {
+            username,
+            password
+        }
+    
         return this.http.post<TokenResponse>(
             AppConfig.authURI,
-            {
-                username,
-                password
-            }
+            body
         )
     }
 
@@ -57,6 +60,12 @@ export class AuthService {
 
     getToken() {
         return new Observable<SimpleResponse>(subscriber => {
+                if (this.isTokenExpired()) {
+                    subscriber.next({
+                       success: false
+                    })
+            }
+
             const token = localStorage.getItem("token")
             subscriber.next({
                 success: true,
@@ -65,4 +74,18 @@ export class AuthService {
         })
     }
 
+    isTokenExpired() {
+        return moment().isBefore(this.getExpiration());
+    }
+
+    getExpiration(): moment.Moment {
+        const expiration = localStorage.getItem("expires_at")
+
+        if (null == expiration) {
+            return moment(0)
+        }
+
+        const expiresAt = JSON.parse(expiration )
+        return moment(expiresAt);
+    }
 }

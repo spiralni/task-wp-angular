@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-tasks',
@@ -6,10 +7,15 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./tasks.component.css']
 })
 export class TasksComponent implements OnInit {
+  isLoggedIn: boolean = false
 
-  constructor() { }
+  constructor(private authService: AuthService) { 
+
+  }
 
   ngOnInit(): void {
+    this.authService.isLoggedIn
+      .subscribe(isLoggedIn => this.isLoggedIn = isLoggedIn)
   }
 
 }

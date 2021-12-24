@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core'
 import { NgForm } from '@angular/forms'
+import { Router } from '@angular/router'
 import * as moment from 'moment'
 import { Subscription, tap } from 'rxjs'
 import { AuthService, TokenResponse } from 'src/app/services/auth.service'
@@ -14,7 +15,9 @@ export class LoginComponent implements OnInit, OnDestroy {
   isLoggedInSubs: Subscription = new Subscription()
   loginSubscription: Subscription = new Subscription()
 
-  constructor(private authService: AuthService) {
+  constructor(
+    private authService: AuthService,
+    private router: Router) {
   }
 
   ngOnInit(): void {
@@ -43,7 +46,9 @@ export class LoginComponent implements OnInit, OnDestroy {
           }
         })
       )
-      .subscribe()
+      .subscribe(response => {
+        this.router.navigate(['tasks'])
+      })
   }
 
   ngOnDestroy(): void {
