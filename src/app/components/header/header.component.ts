@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from 'src/app/services/auth.service';
+import { AuthService, SimpleResponse } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-header',
@@ -14,6 +14,15 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit(): void {
     this.authService.isLoggedIn.subscribe(isLoggedIn => this.isLoggedIn = isLoggedIn)
+  }
+
+  onLogOut() {
+    this.authService.doLogout()
+      .subscribe((res: SimpleResponse) => {
+        if (res.success) {
+          console.log('Logged out')
+        }
+      })
   }
 
 }

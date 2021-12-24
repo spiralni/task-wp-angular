@@ -5,7 +5,11 @@
         <button 
           *ngIf="isLoggedIn"
           class="btn btn-outline-danger" 
-          type="submit">Log Out</button>
+          >Log Out</button>
+          <a 
+          *ngIf="!isLoggedIn"
+          class="btn btn-outline-success" 
+          [routerLink]="'login'">Log In</a>
       </form>
     </div>
   </nav>
